@@ -49,3 +49,21 @@ Cosmos DB
 Redis
 Storage Account
 Terraform (para provisioning)
+
+📂 Estrutura do Projeto
+
+netflix-catalog-functions/
+│── SaveFileFunction/
+│   ├── function.json
+│   ├── run.csx
+│── SaveToCosmosDBFunction/
+│   ├── function.json
+│   ├── run.csx
+│── FilterRecordsFunction/
+│   ├── function.json
+│   ├── run.csx
+│── ListRecordsFunction/
+│   ├── function.json
+│   ├── run.csx
+│── host.json
+│── local.settings.json

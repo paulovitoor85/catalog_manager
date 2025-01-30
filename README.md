@@ -23,7 +23,7 @@ Este projeto usa Azure Functions, Cosmos DB, Redis e Storage Account para gerenc
 
 ## Como Executar
 
-### 1. Provisionar a Infraestrutura no Azure
+1️⃣ Provisionar a Infraestrutura no Azure
 
 Execute o comando Terraform para provisionar todos os recursos:
 
@@ -31,16 +31,46 @@ Execute o comando Terraform para provisionar todos os recursos:
 terraform init
 terraform apply
 
-### 2. Configurar as Funções*
+2️⃣ Criar as Azure Functions
 
-Publique as funções no Azure Functions.
+criar as funções necessárias
 
-### 3. Testar as Funções
+3️⃣ Publicar as Azure Functions no Azure
+Instale a CLI do Azure Functions:
+npm install -g azure-functions-core-tools
+
+Faça login no Azure:
+az login
+
+Selecione o grupo de recursos:
+az account set --subscription "<subscription-id>"
+
+
+Vá para a pasta do projeto e publique:
+cd netflix-catalog-functions
+func azure functionapp publish netflix-catalog-functions
+
+
+4️⃣ Testar as Funções
 
 Salvar Arquivo: Faça um POST na função SaveFile.
 Salvar no Cosmos DB: Faça um POST na função SaveToCosmosDB.
 Filtrar Registros: Faça um GET na função FilterRecords.
 Listar Registros: Faça um GET na função ListRecords.
+
+- Testar as Funções
+
+Salvar Arquivo no Storage Account
+curl -X POST -d "@data.json" -H "Content-Type: application/json" https://<function-app-name>.azurewebsites.net/api/SaveFileFunction
+
+Salvar Catálogo no CosmosDB
+curl -X POST -d '{"title": "Stranger Things", "genre": "Sci-Fi"}' -H "Content-Type: application/json" https://<function-app-name>.azurewebsites.net/api/SaveToCosmosDBFunction
+
+Filtrar Registros (por gênero)
+curl -X GET "https://<function-app-name>.azurewebsites.net/api/FilterRecordsFunction?genre=Sci-Fi"
+
+Listar Todos os Registros
+curl -X GET "https://<function-app-name>.azurewebsites.net/api/ListRecordsFunction"
 
 ### Dependências
 
